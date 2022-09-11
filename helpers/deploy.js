@@ -34,6 +34,24 @@ module.exports = function(artifacts) {
   CarToken.numberFormat = 'String';
 
   return {
+    async deployTokenAndTokenController(from, proxyAdmin) {
+      const curioProject = new SimpleProject('Curio', null, { from });
+
+      const tokenController = await curioProject.createProxy(CarTokenController, {
+        initArgs: [from],
+        admin: proxyAdmin,
+        contractName: 'CarTokenController'
+      });
+
+      const token = await CarToken.new(tokenController._address, tokenController._address, tokenController._address, {
+        from
+      });
+
+      return {
+        token: await getResultContract('CarToken').at(token.address),
+        tokenController: await getResultContract('CarTokenController').at(tokenController._address),
+      };
+    },
     async deployWhitelistedTokenSale(from, proxyAdmin) {
       const curioProject = new SimpleProject('Curio', null, { from });
 

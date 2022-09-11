@@ -6,3 +6,4 @@ build
 .nyc_output
 report/*.csv
 coverage.json
+.env
