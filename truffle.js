@@ -61,6 +61,21 @@ const config = {
       networkCheckTimeout: 500000,
       timeoutBlocks: 500000
     },
+    holesky: {
+      gasPrice: 2e9, // 2 gwei
+      gasLimit: 15 * 1e6, // 15,000,000
+      provider: getProvider(`wss://holesky.drpc.org`), // This public RPC without error: only replay-protected (EIP-155) transactions allowed over RPC
+      websockets: true,
+      skipDryRun: true,
+      network_id: '17000',
+      networkCheckTimeout: 500000,
+      timeoutBlocks: 500000,
+      verify: {
+        apiUrl: 'https://api-holesky.etherscan.io/api',
+        apiKey: process.env.ETHERSCAN_API_KEY,
+        explorerUrl: 'https://holesky.etherscan.io',
+      },
+    },
     test: {
       // https://github.com/trufflesuite/ganache-core#usage
       provider() {
